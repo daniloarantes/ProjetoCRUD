@@ -5,6 +5,8 @@
  */
 package Janelas;
 
+import BD.Conexao;
+
 /**
  *
  * @author Danilo Arantes <danilo at daniloarantes.com>
@@ -15,9 +17,7 @@ public class CadastroProduto extends javax.swing.JFrame {
      * Creates new form CadastroProduto
      */
     public CadastroProduto() {
-        initComponents();
-        
-        
+        initComponents();        
     }
 
     /**
@@ -75,6 +75,11 @@ public class CadastroProduto extends javax.swing.JFrame {
         jBAlterar.setText("Alterar");
 
         jBCadastrar.setText("Cadastrar");
+        jBCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBCadastrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -156,6 +161,10 @@ public class CadastroProduto extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
+        
+    }//GEN-LAST:event_jBCadastrarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -29,8 +29,10 @@ public class Conexao {
             Class.forName(DRIVER);
             return DriverManager.getConnection(URL, USER, PASS);
         } catch (ClassNotFoundException | SQLException ex) {
-            throw new RuntimeException("Erro na conexão: " + ex);
+            //throw new RuntimeException("Erro na conexão: " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao conectar: " + ex);
         }
+        return null;
     }
 
     public static void closeConnection(Connection con) {
