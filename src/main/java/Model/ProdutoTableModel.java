@@ -7,7 +7,6 @@ package Model;
 
 import Objetos.Produto;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -74,6 +73,10 @@ public class ProdutoTableModel extends AbstractTableModel {
     public void removeLinha(int linha){
         this.dados.remove(linha);
         this.fireTableRowsDeleted(linha, linha);
+    }
+    
+    public Produto pegaDadosLinha(int linha){
+        return dados.get(linha);
     }
     
 }
