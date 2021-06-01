@@ -6,6 +6,9 @@
 package Janelas;
 
 import BD.Conexao;
+import Model.ProdutoTableModel;
+import Objetos.Produto;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,11 +16,14 @@ import BD.Conexao;
  */
 public class CadastroProduto extends javax.swing.JFrame {
 
+    ProdutoTableModel modelo = new ProdutoTableModel();
+
     /**
      * Creates new form CadastroProduto
      */
     public CadastroProduto() {
-        initComponents();        
+        initComponents();
+        jTProdutos.setModel(modelo);
     }
 
     /**
@@ -71,6 +77,11 @@ public class CadastroProduto extends javax.swing.JFrame {
         jLabel3.setText("Quantidade");
 
         jBRemover.setText("Remover");
+        jBRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBRemoverActionPerformed(evt);
+            }
+        });
 
         jBAlterar.setText("Alterar");
 
@@ -163,8 +174,43 @@ public class CadastroProduto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
-        
+        Produto p = new Produto();
+
+        try {
+            if (jTQuantidade.getText().matches("^[0-9]+$") && jTValor.getText().matches("^[0-9]+$")) {
+                p.setDescricao(jTDescricao.getText());
+                p.setQuantidade(Integer.parseInt(jTQuantidade.getText()));
+                p.setValor(Double.parseDouble(jTValor.getText()));
+                modelo.addLinha(p);
+                limpaCampos();
+            } else {
+                if (!(jTQuantidade.getText().matches("^[0-9]+$"))) {
+                    JOptionPane.showMessageDialog(this, "Preencha a quantidade");
+                    jTQuantidade.requestFocus();
+                } else if (!(jTValor.getText().matches("^[0-9]+$"))) {
+                    JOptionPane.showMessageDialog(this, "Preencha o valor");
+                    jTValor.requestFocus();
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Preencha corretamente os campos" + e);
+        }
     }//GEN-LAST:event_jBCadastrarActionPerformed
+
+    private void jBRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemoverActionPerformed
+        if (jTProdutos.getSelectedRow() != -1) {
+            modelo.removeLinha(jTProdutos.getSelectedRow());
+        }
+    }//GEN-LAST:event_jBRemoverActionPerformed
+
+    public void limpaCampos() {
+        jTDescricao.setText("");
+        jTQuantidade.setText("");
+        jTValor.setText("");
+
+        jTDescricao.requestFocus();
+    }
 
     /**
      * @param args the command line arguments
