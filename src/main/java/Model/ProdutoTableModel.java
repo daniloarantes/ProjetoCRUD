@@ -5,6 +5,7 @@
  */
 package Model;
 
+import DAO.ProdutoDAO;
 import Objetos.Produto;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +16,12 @@ import javax.swing.table.AbstractTableModel;
  * @author Danilo Arantes <danilo at daniloarantes.com>
  */
 public class ProdutoTableModel extends AbstractTableModel {
-    
+
     private List<Produto> dados = new ArrayList<>();
     private String[] colunas = {"Descrição", "Quantidade", "Valor"};
-    
+
     @Override
-    public String getColumnName(int column){
+    public String getColumnName(int column) {
         return colunas[column];
     }
 
@@ -46,9 +47,9 @@ public class ProdutoTableModel extends AbstractTableModel {
         }
         return null;
     }
-    
+
     @Override
-    public void setValueAt(Object valor, int linha, int coluna){
+    public void setValueAt(Object valor, int linha, int coluna) {
         switch (coluna) {
             case 0:
                 dados.get(linha).setDescricao((String) valor);
@@ -58,25 +59,41 @@ public class ProdutoTableModel extends AbstractTableModel {
                 break;
             case 2:
                 dados.get(linha).setValor(Double.parseDouble((String) valor));
-                break;            
+                break;
         }
         this.fireTableRowsUpdated(linha, linha);
     }
-    
+
     // Método para adicionar linhas na tabela
-    public void addLinha(Produto p){
+    public void addLinha(Produto p) {
         this.dados.add(p);
-        this.fireTableDataChanged();        
+        this.fireTableDataChanged();
     }
-    
+
     // Método para remover linha da tabela
-    public void removeLinha(int linha){
+    public void removeLinha(int linha) {
         this.dados.remove(linha);
         this.fireTableRowsDeleted(linha, linha);
     }
-    
-    public Produto pegaDadosLinha(int linha){
+
+    public Produto pegaDadosLinha(int linha) {
         return dados.get(linha);
     }
+
+    private void lerDados() {
+        ProdutoDAO pdao = new ProdutoDAO();
+
+        for (Produto p : pdao.read()) {
+            this.addLinha(p);
+        }
+        this.fireTableDataChanged();
+    }
     
+    public void recarregaTabela(){
+        this.dados.clear();
+        lerDados();
+        this.fireTableDataChanged();
+    }
+    
+
 }

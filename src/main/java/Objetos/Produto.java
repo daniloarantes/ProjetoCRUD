@@ -5,15 +5,20 @@
  */
 package Objetos;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 /**
  *
  * @author Danilo Arantes <danilo at daniloarantes.com>
  */
 public class Produto {
+
     private int id;
     private String descricao;
     private double valor;
     private int quantidade;
+
 
     public int getId() {
         return id;
@@ -32,10 +37,12 @@ public class Produto {
     }
 
     public double getValor() {
+
         return valor;
     }
 
     public void setValor(double valor) {
+
         this.valor = valor;
     }
 
@@ -46,6 +53,5 @@ public class Produto {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
-    
-    
+
 }
