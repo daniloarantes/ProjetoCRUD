@@ -26,6 +26,7 @@ public class Conexao {
     // Método que estabelece conexão com o Banco de Dados
     public static Connection getConnection() {
         try {
+           
             Class.forName(DRIVER);
             return DriverManager.getConnection(URL, USER, PASS);
         } catch (ClassNotFoundException | SQLException ex) {

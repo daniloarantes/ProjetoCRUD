@@ -5,6 +5,7 @@
  */
 package Janelas;
 
+import BD.Conexao;
 import DAO.ProdutoDAO;
 import Model.ProdutoTableModel;
 import Objetos.Produto;
@@ -25,6 +26,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         initComponents();
         jTProdutos.setModel(modelo);
         modelo.recarregaTabela();
+        
     }
 
     /**
@@ -49,6 +51,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         jBAlterar = new javax.swing.JButton();
         jBCadastrar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jBUsuarios = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(0, 0));
@@ -156,6 +159,13 @@ public class CadastroProduto extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Cadastro de Produtos");
 
+        jBUsuarios.setText("Gerenciar Usuários");
+        jBUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBUsuariosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -167,6 +177,10 @@ public class CadastroProduto extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBUsuarios)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,7 +191,9 @@ public class CadastroProduto extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jBUsuarios)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -220,6 +236,10 @@ public class CadastroProduto extends javax.swing.JFrame {
     private void jBRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemoverActionPerformed
         if (jTProdutos.getSelectedRow() != -1) {
             Produto p = modelo.pegaDadosLinha(jTProdutos.getSelectedRow());
+            ProdutoDAO dao = new ProdutoDAO();
+            dao.delete(p);
+            modelo.recarregaTabela();
+            
         }
     }//GEN-LAST:event_jBRemoverActionPerformed
 
@@ -244,6 +264,11 @@ public class CadastroProduto extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_jBAlterarActionPerformed
+
+    private void jBUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBUsuariosActionPerformed
+        JanelaUsuarios ju = new JanelaUsuarios();
+        ju.setVisible(true);
+    }//GEN-LAST:event_jBUsuariosActionPerformed
 
     public void limpaCampos() {
         jTDescricao.setText("");
@@ -292,6 +317,7 @@ public class CadastroProduto extends javax.swing.JFrame {
     private javax.swing.JButton jBAlterar;
     private javax.swing.JButton jBCadastrar;
     private javax.swing.JButton jBRemover;
+    private javax.swing.JButton jBUsuarios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

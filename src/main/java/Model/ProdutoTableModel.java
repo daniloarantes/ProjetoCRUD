@@ -69,6 +69,10 @@ public class ProdutoTableModel extends AbstractTableModel {
         this.dados.add(p);
         this.fireTableDataChanged();
     }
+    /*
+    1 | Arroz | 1 | 2
+    2 | feijão | 8 | 3
+    */
 
     // Método para remover linha da tabela
     public void removeLinha(int linha) {
