@@ -5,9 +5,6 @@
  */
 package Objetos;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-
 /**
  *
  * @author Danilo Arantes <danilo at daniloarantes.com>
@@ -18,7 +15,6 @@ public class Produto {
     private String descricao;
     private double valor;
     private int quantidade;
-
 
     public int getId() {
         return id;

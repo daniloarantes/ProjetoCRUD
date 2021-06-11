@@ -14,6 +14,7 @@ public class Usuario {
     private String nome;
     private String login;
     private String senha;
+    private String tipo;
 
     public int getId() {
         return id;
@@ -46,6 +47,16 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
+    
     
     
             

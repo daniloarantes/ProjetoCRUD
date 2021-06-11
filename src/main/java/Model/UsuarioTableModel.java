@@ -18,7 +18,7 @@ import javax.swing.table.AbstractTableModel;
 public class UsuarioTableModel extends AbstractTableModel {
 
     private List<Usuario> dados = new ArrayList<>();
-    private String[] colunas = {"Nome", "Login", "Senha"};
+    private String[] colunas = {"Nome", "Login", "Senha", "Tipo"};
 
     @Override
     public String getColumnName(int column) {
@@ -44,6 +44,8 @@ public class UsuarioTableModel extends AbstractTableModel {
                 return dados.get(linha).getLogin();
             case 2:
                 return dados.get(linha).getSenha();
+            case 3:
+                return dados.get(linha).getTipo();
         }
         return null;
     }
@@ -60,6 +62,9 @@ public class UsuarioTableModel extends AbstractTableModel {
             case 2:
                 dados.get(linha).setSenha((String) valor);
                 break;
+            case 3:
+                dados.get(linha).setTipo((String) valor);
+                break;
         }
         this.fireTableRowsUpdated(linha, linha);
     }
@@ -68,7 +73,7 @@ public class UsuarioTableModel extends AbstractTableModel {
         this.dados.add(u);
         this.fireTableDataChanged();
     }
-    
+
     // Método para remover linha da tabela
     public void removeLinha(int linha) {
         this.dados.remove(linha);
@@ -87,8 +92,8 @@ public class UsuarioTableModel extends AbstractTableModel {
         }
         this.fireTableDataChanged();
     }
-    
-    public void recarregaTabela(){
+
+    public void recarregaTabela() {
         this.dados.clear();
         lerDados();
         this.fireTableDataChanged();

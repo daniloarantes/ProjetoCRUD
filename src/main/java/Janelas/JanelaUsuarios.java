@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 public class JanelaUsuarios extends javax.swing.JFrame {
 
     UsuarioTableModel modelo = new UsuarioTableModel();
+    CadastroProduto cp;
 
     /**
      * Creates new form Usuarios
@@ -25,6 +26,21 @@ public class JanelaUsuarios extends javax.swing.JFrame {
         initComponents();
         jTUsuarios.setModel(modelo);
         modelo.recarregaTabela();
+        jCTipo.removeAllItems();
+        jCTipo.addItem("ADM");
+        jCTipo.addItem("USR");
+        jCTipo.setSelectedIndex(1);
+    }
+    
+    public JanelaUsuarios(CadastroProduto cp) {
+        initComponents();
+        jTUsuarios.setModel(modelo);
+        modelo.recarregaTabela();
+        jCTipo.removeAllItems();
+        jCTipo.addItem("ADM");
+        jCTipo.addItem("USR");
+        jCTipo.setSelectedIndex(1);
+        this.cp = cp;
     }
 
     /**
@@ -36,6 +52,7 @@ public class JanelaUsuarios extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCTipo = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTNome = new javax.swing.JTextField();
@@ -46,11 +63,19 @@ public class JanelaUsuarios extends javax.swing.JFrame {
         jBExcluir = new javax.swing.JButton();
         jBAlterar = new javax.swing.JButton();
         jBCadastrar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTUsuarios = new javax.swing.JTable();
 
+        jCTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -81,6 +106,8 @@ public class JanelaUsuarios extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Tipo");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -100,7 +127,9 @@ public class JanelaUsuarios extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jTNome, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel2)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel5))
                             .addGap(18, 18, 18)
                             .addComponent(jTLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -123,11 +152,13 @@ public class JanelaUsuarios extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jTSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBCadastrar)
                     .addComponent(jBAlterar)
                     .addComponent(jBExcluir))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
         );
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -172,9 +203,9 @@ public class JanelaUsuarios extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGap(35, 35, 35))
         );
 
         pack();
@@ -192,6 +223,7 @@ public class JanelaUsuarios extends javax.swing.JFrame {
         jTNome.setText(u.getNome());
         jTLogin.setText(u.getLogin());
         jTSenha.setText(u.getSenha());
+        jCTipo.setSelectedItem(u.getTipo());
     }//GEN-LAST:event_jTUsuariosMouseClicked
 
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
@@ -202,6 +234,7 @@ public class JanelaUsuarios extends javax.swing.JFrame {
             u.setNome(jTNome.getText());
             u.setLogin(jTLogin.getText());
             u.setSenha(jTSenha.getText());
+            u.setTipo(jCTipo.getSelectedItem().toString());
             dao.create(u);
             modelo.recarregaTabela();
             limpaCampos();
@@ -215,6 +248,7 @@ public class JanelaUsuarios extends javax.swing.JFrame {
             modelo.setValueAt(jTNome.getText(), jTUsuarios.getSelectedRow(), 0);
             modelo.setValueAt(jTLogin.getText(), jTUsuarios.getSelectedRow(), 1);
             modelo.setValueAt(jTSenha.getText(), jTUsuarios.getSelectedRow(), 2);
+            modelo.setValueAt(jCTipo.getSelectedItem(), jTUsuarios.getSelectedRow(), 3);
             
             Usuario u = modelo.pegaDadosLinha(jTUsuarios.getSelectedRow());
             UsuarioDAO dao = new UsuarioDAO();
@@ -234,6 +268,10 @@ public class JanelaUsuarios extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_jBExcluirActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        cp.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -275,10 +313,12 @@ public class JanelaUsuarios extends javax.swing.JFrame {
     private javax.swing.JButton jBAlterar;
     private javax.swing.JButton jBCadastrar;
     private javax.swing.JButton jBExcluir;
+    private javax.swing.JComboBox<String> jCTipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTLogin;
