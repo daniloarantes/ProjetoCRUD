@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 public class Conexao {
 
     private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/CrudProduto";
+    private static final String URL = "jdbc:mysql://localhost:3306/CrudProduto?autoReconnect=true&useSSL=false";
     private static final String USER = "root";
     private static final String PASS = "123456";
 
