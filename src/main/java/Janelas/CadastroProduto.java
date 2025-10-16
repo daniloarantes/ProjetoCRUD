@@ -5,7 +5,6 @@
  */
 package Janelas;
 
-import BD.Conexao;
 import DAO.ProdutoDAO;
 import Model.ProdutoTableModel;
 import Objetos.Produto;
@@ -27,20 +26,21 @@ public class CadastroProduto extends javax.swing.JFrame {
         initComponents();
         jTProdutos.setModel(modelo);
         modelo.recarregaTabela();
+        this.setLocationRelativeTo(null);
     }
-    
+
     public CadastroProduto(Usuario usuario) {
         initComponents();
         jTProdutos.setModel(modelo);
         modelo.recarregaTabela();
         jLNome.setText(usuario.getNome());
         jLTIpo.setText(usuario.getTipo());
-        
+
         if (usuario.getTipo().equals("USR")) {
             jBUsuarios.setEnabled(false);
-        }       
-        
-        
+        }
+        this.setLocationRelativeTo(null);
+
     }
 
     /**
@@ -71,6 +71,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         jLNome = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLTIpo = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(0, 0));
@@ -223,6 +224,13 @@ public class CadastroProduto extends javax.swing.JFrame {
                     .addComponent(jLTIpo)))
         );
 
+        jButton1.setText("Sair");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -239,7 +247,10 @@ public class CadastroProduto extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jBUsuarios)))
+                        .addComponent(jBUsuarios)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)
+                        .addGap(20, 20, 20)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -252,7 +263,9 @@ public class CadastroProduto extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jBUsuarios)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBUsuarios)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -289,7 +302,6 @@ public class CadastroProduto extends javax.swing.JFrame {
 //                    jTValor.requestFocus();
 //                }
 //            }
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao adicionar" + e);
         }
@@ -301,7 +313,7 @@ public class CadastroProduto extends javax.swing.JFrame {
             ProdutoDAO dao = new ProdutoDAO();
             dao.delete(p);
             modelo.recarregaTabela();
-            
+
         }
     }//GEN-LAST:event_jBRemoverActionPerformed
 
@@ -317,13 +329,12 @@ public class CadastroProduto extends javax.swing.JFrame {
             modelo.setValueAt(jTDescricao.getText(), jTProdutos.getSelectedRow(), 0);
             modelo.setValueAt(jTQuantidade.getText(), jTProdutos.getSelectedRow(), 1);
             modelo.setValueAt(jTValor.getText(), jTProdutos.getSelectedRow(), 2);
-            
+
             Produto p = modelo.pegaDadosLinha(jTProdutos.getSelectedRow());
             ProdutoDAO dao = new ProdutoDAO();
-            dao.update(p);            
+            dao.update(p);
             limpaCampos();
             modelo.recarregaTabela();
-            
         }
     }//GEN-LAST:event_jBAlterarActionPerformed
 
@@ -332,6 +343,10 @@ public class CadastroProduto extends javax.swing.JFrame {
         ju.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jBUsuariosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public void limpaCampos() {
         jTDescricao.setText("");
@@ -381,6 +396,7 @@ public class CadastroProduto extends javax.swing.JFrame {
     private javax.swing.JButton jBCadastrar;
     private javax.swing.JButton jBRemover;
     private javax.swing.JButton jBUsuarios;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLNome;
     private javax.swing.JLabel jLTIpo;
     private javax.swing.JLabel jLabel1;

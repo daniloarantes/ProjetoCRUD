@@ -5,16 +5,21 @@
  */
 package Objetos;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 /**
  *
  * @author danilo
  */
 public class Usuario {
+
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     private int id;
     private String nome;
     private String login;
     private String senha;
     private String tipo;
+    private String senhaHash;
 
     public int getId() {
         return id;
@@ -48,6 +53,14 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public String getSenhaHash() {
+        return senhaHash;
+    }
+
+    public void setSenhaHash(String senha) {
+        this.senhaHash = encoder.encode(senha);
+    }
+
     public String getTipo() {
         return tipo;
     }
@@ -55,10 +68,10 @@ public class Usuario {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
-    
-    
-    
-            
-    
+
+    // Método para validação de senha
+    public boolean verificarSenha(String senhaDigitada) {
+        return encoder.matches(senhaDigitada, this.senha);
+    }
+
 }

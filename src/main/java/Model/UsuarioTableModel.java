@@ -43,7 +43,7 @@ public class UsuarioTableModel extends AbstractTableModel {
             case 1:
                 return dados.get(linha).getLogin();
             case 2:
-                return dados.get(linha).getSenha();
+                return dados.get(linha).getSenhaHash();
             case 3:
                 return dados.get(linha).getTipo();
         }
@@ -60,7 +60,7 @@ public class UsuarioTableModel extends AbstractTableModel {
                 dados.get(linha).setLogin((String) valor);
                 break;
             case 2:
-                dados.get(linha).setSenha((String) valor);
+                dados.get(linha).setSenhaHash((String) valor);
                 break;
             case 3:
                 dados.get(linha).setTipo((String) valor);

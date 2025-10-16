@@ -6,6 +6,7 @@
 package Janelas;
 
 import DAO.UsuarioDAO;
+import Objetos.Usuario;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,6 +20,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -127,20 +129,20 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEntrarActionPerformed
-       
-        
         UsuarioDAO dao = new UsuarioDAO();
-        
-        if (dao.checaLogin(jTLogin.getText(), String.valueOf(jTSenha.getPassword()))) {
-            CadastroProduto cp = new CadastroProduto(dao.dadosUsuario(jTLogin.getText(),
-                    String.valueOf(jTSenha.getPassword())));
+        Usuario user;
+
+        user = dao.verificaUsuario(jTLogin.getText());
+
+        if (user.verificarSenha(String.valueOf(jTSenha.getPassword()))) {
+            CadastroProduto cp = new CadastroProduto(user);
             cp.setVisible(true);
             this.dispose();
-        }else {
-            JOptionPane.showMessageDialog(null, "Usuário não encontrado");
+        } else {
+            JOptionPane.showMessageDialog(null, "Falha na autenticação");
         }
-        
-        
+
+
     }//GEN-LAST:event_jBEntrarActionPerformed
 
     /**

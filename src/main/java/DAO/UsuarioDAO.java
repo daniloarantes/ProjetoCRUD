@@ -20,8 +20,8 @@ import javax.swing.JOptionPane;
  * @author danilo
  */
 public class UsuarioDAO {
-    
-     public List<Usuario> read() {
+
+    public List<Usuario> read() {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -57,7 +57,7 @@ public class UsuarioDAO {
                     "INSERT INTO tbl_usuarios (nome, login, senha, tipo) VALUES (?, ?, ?, ?)");
             stmt.setString(1, u.getNome());
             stmt.setString(2, u.getLogin());
-            stmt.setString(3, u.getSenha());
+            stmt.setString(3, u.getSenhaHash());
             stmt.setString(4, u.getTipo());
 
             stmt.execute();
@@ -76,12 +76,12 @@ public class UsuarioDAO {
 
         try {
             stmt = con.prepareStatement(
-     "UPDATE tbl_usuarios SET nome = ?, login = ?, senha = ?, tipo = ? WHERE id = ?");
+                    "UPDATE tbl_usuarios SET nome = ?, login = ?, senha = ?, tipo = ? WHERE id = ?");
             stmt.setString(1, u.getNome());
             stmt.setString(2, u.getLogin());
-            stmt.setString(3, u.getSenha());
+            stmt.setString(3, u.getSenhaHash());
             stmt.setString(4, u.getTipo());
-            stmt.setInt(5, u.getId());          
+            stmt.setInt(5, u.getId());
 
             stmt.execute();
             JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
@@ -92,14 +92,14 @@ public class UsuarioDAO {
             Conexao.closeConnection(con, stmt);
         }
     }
-    
+
     public void delete(Usuario u) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
 
         try {
             stmt = con.prepareStatement("DELETE FROM tbl_usuarios WHERE id = ?");
-            stmt.setInt(1, u.getId());          
+            stmt.setInt(1, u.getId());
 
             stmt.execute();
             JOptionPane.showMessageDialog(null, "Removido com sucesso!");
@@ -110,40 +110,17 @@ public class UsuarioDAO {
             Conexao.closeConnection(con, stmt);
         }
     }
-    
-    public boolean checaLogin(String login, String senha){
-        Connection con = Conexao.getConnection();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        boolean logado = false;
-        
-        try {
-            stmt = con.prepareStatement(
-             "SELECT * FROM tbl_usuarios WHERE login = ? and senha = ?");
-            stmt.setString(1, login);
-            stmt.setString(2, senha);
-            rs = stmt.executeQuery();
-            
-            if (rs.next()) {
-                logado = true;
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Usuário não encontrado");
-        } finally {
-            Conexao.closeConnection(con, stmt, rs);
-        }
-        return logado;  
-    }
-    
-    public Usuario dadosUsuario(String login, String senha){
+
+    // Método que pode ser utilizado para verificação simples de login
+    public Usuario dadosUsuario(String login, String senha) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         Usuario u = new Usuario();
-        
+
         try {
             stmt = con.prepareStatement(
-             "SELECT * FROM tbl_usuarios WHERE login = ? AND senha = ?");
+                    "SELECT * FROM tbl_usuarios WHERE login = ? AND senha = ?");
             stmt.setString(1, login);
             stmt.setString(2, senha);
             rs = stmt.executeQuery();
@@ -162,6 +139,34 @@ public class UsuarioDAO {
         }
         return u;
     }
-    
-    
+
+    public Usuario verificaUsuario(String login) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Usuario u = new Usuario();
+
+        try {
+            stmt = con.prepareStatement(
+                    "SELECT * FROM tbl_usuarios WHERE login = ?");
+            stmt.setString(1, login);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                u.setId(rs.getInt("id"));
+                u.setNome(rs.getString("nome"));
+                u.setLogin(rs.getString("login"));
+                u.setSenha(rs.getString("senha"));
+                u.setTipo(rs.getString("tipo"));
+            }
+
+            return u;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Falha ao obter dados " + e);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+        return null;
+    }
+
 }

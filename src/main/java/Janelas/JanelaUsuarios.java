@@ -30,8 +30,9 @@ public class JanelaUsuarios extends javax.swing.JFrame {
         jCTipo.addItem("ADM");
         jCTipo.addItem("USR");
         jCTipo.setSelectedIndex(1);
+        this.setLocationRelativeTo(null);
     }
-    
+
     public JanelaUsuarios(CadastroProduto cp) {
         initComponents();
         jTUsuarios.setModel(modelo);
@@ -41,6 +42,7 @@ public class JanelaUsuarios extends javax.swing.JFrame {
         jCTipo.addItem("USR");
         jCTipo.setSelectedIndex(1);
         this.cp = cp;
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -233,7 +235,7 @@ public class JanelaUsuarios extends javax.swing.JFrame {
         try {
             u.setNome(jTNome.getText());
             u.setLogin(jTLogin.getText());
-            u.setSenha(jTSenha.getText());
+            u.setSenhaHash(jTSenha.getText());
             u.setTipo(jCTipo.getSelectedItem().toString());
             dao.create(u);
             modelo.recarregaTabela();
@@ -244,18 +246,20 @@ public class JanelaUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_jBCadastrarActionPerformed
 
     private void jBAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAlterarActionPerformed
-         if (jTUsuarios.getSelectedRow() != -1) {
+        if (jTUsuarios.getSelectedRow() != -1) {
             modelo.setValueAt(jTNome.getText(), jTUsuarios.getSelectedRow(), 0);
             modelo.setValueAt(jTLogin.getText(), jTUsuarios.getSelectedRow(), 1);
             modelo.setValueAt(jTSenha.getText(), jTUsuarios.getSelectedRow(), 2);
             modelo.setValueAt(jCTipo.getSelectedItem(), jTUsuarios.getSelectedRow(), 3);
-            
+
             Usuario u = modelo.pegaDadosLinha(jTUsuarios.getSelectedRow());
+            System.out.println("Antiga: " + u.getSenha());
+            System.out.println("Nova:" + u.getSenhaHash());
             UsuarioDAO dao = new UsuarioDAO();
-            dao.update(u);            
+            dao.update(u);
             limpaCampos();
             modelo.recarregaTabela();
-            
+
         }
     }//GEN-LAST:event_jBAlterarActionPerformed
 
@@ -265,7 +269,6 @@ public class JanelaUsuarios extends javax.swing.JFrame {
             UsuarioDAO dao = new UsuarioDAO();
             dao.delete(u);
             modelo.recarregaTabela();
-            
         }
     }//GEN-LAST:event_jBExcluirActionPerformed
 

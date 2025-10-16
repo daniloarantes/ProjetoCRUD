@@ -54,7 +54,7 @@ CREATE TABLE `tbl_usuarios` (
   `id` int(11) NOT NULL,
   `nome` varchar(50) NOT NULL,
   `login` varchar(10) NOT NULL,
-  `senha` varchar(8) NOT NULL,
+  `senha` varchar(255) NOT NULL,
   `tipo` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -21,7 +21,7 @@ public class Conexao {
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     private static final String URL = "jdbc:mysql://localhost:3306/CrudProduto?autoReconnect=true&useSSL=false";
     private static final String USER = "root";
-    private static final String PASS = "123456";
+    private static final String PASS = "tiger";
 
     // Método que estabelece conexão com o Banco de Dados
     public static Connection getConnection() {
